@@ -90,6 +90,7 @@ namespace TcpServer
                     System.Net.Sockets.SocketType.Stream, System.Net.Sockets.ProtocolType.Tcp);
             }
 
+            // 서버 실행
             public void StartListening()
             {
                 // bind and listen
@@ -106,9 +107,11 @@ namespace TcpServer
                 }
             }
 
+            // 접속자 비동기 등록 콜백
             private void AcceptCallback(IAsyncResult ar)
             {
                 allDone.Set();  // 접속이 있음을 알림
+                // 알려지면 바로 접속대기하는 상태로 들어간다.
                 try
                 {
                     // 넘겨받은 객체는 server의 소켓
@@ -243,7 +246,7 @@ namespace TcpServer
                 if (BroadCast != null)
                 {
                     // 사용자가 나감을 알림
-                    BroadCast(String.Format("\"{0}\"이 나갔습니다.", key));
+                    BroadCast(String.Format("\"{0}\"이 나갔습니다.<EOF>", key));
                 }
             }
         }
